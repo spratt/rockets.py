@@ -86,5 +86,6 @@ def cost(config):
 
 configs = sorted(configs, key=lambda x: cost(x))
 
+print "cost: engine + fuel tank"
 for config in configs:
-    print cost(config), ':', config[0]['name'], '+', config[1]['name']
+    print cost(config), '¤:', config[0]['name'], '+', config[1]['name']
