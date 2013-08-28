@@ -1,14 +1,14 @@
-Part Name,Thrust (MN),Mass (tons),Thrust to Weight,Specific Impulse (s),Exhaust Velocity (m/s),Mass needed for fuel (% of total)
-Toroidal Aerospike Rocket,0.175,1.50,11.9,388,3806.28,0.693413912894444
-LV-T30 Liquid Fuel Engine,0.215,1.25,17.5,320,3139.2,0.761523913167086
-LV-T45 Liquid Fuel Engine,0.2,1.50,13.6,320,3139.2,0.761523913167086
-Rockomax 48-7S,0.02,0.10,20.4,300,2943,0.783258956888621
-LV-909 Liquid Fuel Engine,0.05,0.50,10.2,300,2943,0.783258956888621
-"Rockomax ""Skipper"" Liquid Engine",0.65,4.00,16.6,300,2943,0.783258956888621
-Rockomax Mark 55 Radial Mount Liquid Engine,0.12,0.90,13.6,290,2844.9,0.794390783357934
-"Rockomax ""Mainsail"" Liquid Engine",1.5,6.00,25.5,280,2746.8,0.805684079240307
-"Rockomax ""Poodle"" Liquid Engine",0.22,2.50,9,270,2648.7,0.817123945436064
-Rockomax 24-77,0.02,0.09,22.7,250,2452.5,0.840364531559655
-LV-1R,0.0015,0.03,5.1,220,2158.2,0.875701691953232
-LV-1 Liquid Fuel Engine,0.0015,0.03,5.1,220,2158.2,0.875701691953232
-LV-N Atomic Rocket Engine,0.06,2.25,2.7,220,2158.2,0.875701691953232
+name,thrust,mass,impulse,cost
+Toroidal Aerospike Rocket,0.175,1.50,388,850
+LV-T30 Liquid Fuel Engine,0.215,1.25,320,850
+LV-T45 Liquid Fuel Engine,0.2,1.50,320,950
+Rockomax 48-7S,0.02,0.10,300,300
+LV-909 Liquid Fuel Engine,0.05,0.50,300,750
+"Rockomax ""Skipper"" Liquid Engine",0.65,4.00,300,850
+Rockomax Mark 55 Radial Mount Liquid Engine,0.12,0.90,290,850
+"Rockomax ""Mainsail"" Liquid Engine",1.5,6.00,280,850
+"Rockomax ""Poodle"" Liquid Engine",0.22,2.50,270,600
+Rockomax 24-77,0.02,0.09,250,240
+LV-1R,0.0015,0.03,220,150
+LV-1 Liquid Fuel Engine,0.0015,0.03,220,150
+LV-N Atomic Rocket Engine,0.06,2.25,220,1700
