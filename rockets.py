@@ -1,14 +1,16 @@
 #!/usr/bin/env python2.7
 # -*- coding: utf-8 -*-
 
+import argparse
+import csv
+import math
+
 # constants
 Ag = 9.807 # acceleration due to gravity (m/s/s)
 R  = 600000 # radius of the planet
 La = 68000 # atmosphere limit (m)
 
 # parse command-line arguments
-import argparse
-
 parser = argparse.ArgumentParser(
     description='Compare various rocket configurations')
 parser.add_argument('--engines', default='engines.csv', nargs='?',
@@ -23,7 +25,6 @@ parser.add_argument('--cost', type=int, default=600, nargs='?',
 args = parser.parse_args()
 
 # read from csv files
-import csv
 with open(args.engines,'rb') as engines_file:
     engines = [row for row in csv.DictReader(engines_file)]
 
@@ -31,8 +32,7 @@ with open(args.fuel_tanks,'rb') as tanks_file:
     tanks = [row for row in csv.DictReader(tanks_file)]
 
 # calculate minimum stable orbital velocity
-import math
-
+# http://wiki.kerbalspaceprogram.com/wiki/Tutorial:_Basic_Orbiting_%28Math%29
 Vs = R * math.sqrt(Ag / (R + La))
 
 # generate every pair of a single engine and tank (a config)
@@ -65,7 +65,8 @@ def Fl(config):
 
 configs = filter(lambda x: Fl(x) > 0, configs)
 
-# filter configs by ability to reach orbital speed
+# filter configs by ability to reach orbital speed using rocket eqn
+# https://en.wikipedia.org/wiki/Tsiolkovsky_rocket_equation
 def Isp(config):
     """ calculate the specific impulse of a config """
     return float(config[0]['impulse'])
