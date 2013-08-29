@@ -2,8 +2,9 @@
 # -*- coding: utf-8 -*-
 
 # constants
-Ag = 9.81 # acceleration due to gravity
-Vs = 4500 # stable orbital speed
+Ag = 9.807 # acceleration due to gravity (m/s/s)
+R  = 600000 # radius of the planet
+La = 68000 # atmosphere limit (m)
 
 # parse command-line arguments
 import argparse
@@ -29,6 +30,11 @@ with open(args.engines,'rb') as engines_file:
 with open(args.fuel_tanks,'rb') as tanks_file:
     tanks = [row for row in csv.DictReader(tanks_file)]
 
+# calculate minimum stable orbital velocity
+import math
+
+Vs = R * math.sqrt(Ag / (R + La))
+
 # generate every pair of a single engine and tank (a config)
 configs = [(x,y) for x in engines for y in tanks]
 
@@ -53,14 +59,13 @@ def Fg(config):
     """ calculate the weight of a config in kilonewtons """
     return mass(config)*Ag
 
-configs = filter(lambda x: thrust(x) > Fg(x), configs)
+def Fl(config):
+    """ calculate the liftoff force of a config in kilonewtons """
+    return thrust(config) - Fg(config)
 
-# sort configs by specific impulse
-configs = sorted(configs, key=lambda x: x[0]['impulse'])
+configs = filter(lambda x: Fl(x) > 0, configs)
 
 # filter configs by ability to reach orbital speed
-import math
-
 def Isp(config):
     """ calculate the specific impulse of a config """
     return float(config[0]['impulse'])
@@ -77,7 +82,11 @@ def needed_FtM(config):
     """ calculate the needed fuel mass to total mass ratio of a config """
     return 1 - math.exp(-Vs/Ve(config))
 
-configs = filter(lambda x: FtM(x) > needed_FtM(x), configs)
+def dFtM(config):
+    """ calculate the delta fuel to mass ratio """
+    return FtM(config) - needed_FtM(config)
+
+configs = filter(lambda x: dFtM(x) > 0, configs)
 
 # print the remaining configs with their associated cost
 def cost(config):
@@ -86,6 +95,9 @@ def cost(config):
 
 configs = sorted(configs, key=lambda x: cost(x))
 
-print "cost: engine + fuel tank"
+print "cost,engine,tank,Fl,dFtM"
 for config in configs:
-    print cost(config), '¤:', config[0]['name'], '+', config[1]['name']
+    datum = [cost(config),config[0]['name'],
+             config[1]['name'],Fl(config),dFtM(config)]
+    datum = map(lambda x: str(x), datum)
+    print ','.join(datum)
